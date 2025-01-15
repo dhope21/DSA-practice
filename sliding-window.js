@@ -1,20 +1,50 @@
-// Smallest Subarray with a given sum (easy)
+// Longest Substring with K Distinct Characters (medium)
 
-var minSubArrayLen = function (nums, target) { 
-    let window_start = 0;
-    let sum_subarray = 0;
-    let min_subarray = Infinity;
-    for (let window_end = 0; window_end < nums.length; window_end ++ ){
-        sum_subarray += nums[window_end];
-        while (sum_subarray >= target){
-            min_subarray = Math.min(min_subarray, window_end - window_start);
-            sum_subarray -= nums[window_start]
-            window_start++
-        }
+longestSubstringWithKdistinct("araaci", 2); //4, The longest substring with no more than '2' distinct characters is "araa".
+// longestSubstringWithKdistinct("araaci", 1)//2, The longest substring with no more than '1' distinct characters is "aa".
+// longestSubstringWithKdistinct("cbbebi", 3)//5, The longest substrings with no more than '3' distinct characters are "cbbeb" & "bbebi".
+
+function longestSubstringWithKdistinct(str, k) {
+  let window_start = 0;
+  let max_length = 0;
+  let char_counter = {};
+  // console.log(Object.keys(char_counter).length)
+  for (window_end = 0; window_end < str.length; window_end++) {
+    if (char_counter[str[window_end]]) {
+      char_counter[str[window_end]] += 1;
+    } else {
+      char_counter[str[window_end]] = 1;
     }
-    console.log(min_subarray) 
+    console.log(window_start, window_end, char_counter);
+    while (Object.keys(char_counter).length > k) {
+      if (char_counter[str[window_start]] > 1) {
+        char_counter[str[window_start]] -= 1;
+      } else {
+        delete char_counter[str[window_start]];
+      }
+      window_start++
+    }
+    max_length = Math.max(max_length, window_end - window_start + 1);
+  }
+  console.log("max_length", max_length)
 }
 
+// Smallest Subarray with a given sum (easy)
+
+// var minSubArrayLen = function (nums, target) {
+//     let window_start = 0;
+//     let sum_subarray = 0;
+//     let min_subarray = Infinity;
+//     for (let window_end = 0; window_end < nums.length; window_end ++ ){
+//         sum_subarray += nums[window_end];
+//         while (sum_subarray >= target){
+//             min_subarray = Math.min(min_subarray, window_end - window_start);
+//             sum_subarray -= nums[window_start]
+//             window_start++
+//         }
+//     }
+//     console.log(min_subarray)
+// }
 
 // first most obvious answer, it does not work in some cases.
 // var minSubArrayLen = function (nums, target) {
@@ -46,12 +76,9 @@ var minSubArrayLen = function (nums, target) {
 //   console.log(window_sum, min_length);
 // };
 
-minSubArrayLen([2, 1, 5, 2, 3, 2], 7)
+// minSubArrayLen([2, 1, 5, 2, 3, 2], 7)
 // minSubArrayLen([1,1,1,1,1,1,1,1], 11)
 // minSubArrayLen([1,2,3,4,5], 11);
-
-
-
 
 // const example_array = [0, 4, 0, 3, 2];
 // const example_array = [1,12,-5,-6,50,3];
