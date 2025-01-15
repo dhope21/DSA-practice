@@ -1,33 +1,85 @@
+// Fruit Into Baskets
+totalFruit([3,3,3,1,2,1,1,2,3,3,4]);
+
+
+// map approach
+function totalFruit(fruits) {
+    let window_start = 0;
+    let max_fruits = 0;
+    let fruit_map = new Map();
+    for (let window_end = 0; window_end < fruits.length; window_end++){
+        let fruit_end = fruits[window_end];
+        fruit_map.set(fruit_end, fruit_map.get(fruit_end) +1 || 1 )
+        while (fruit_map.size >2 ){
+            let fruit_start = fruits[window_start];
+            fruit_map.set(fruit_start, fruit_map.get(fruit_start)-1 )
+            if(fruit_map.get(fruit_start) == 0){
+                fruit_map.delete(fruit_start)
+            }
+            window_start++
+        }
+        max_fruits = Math.max(max_fruits, window_end-window_start+1)
+    }
+    console.log(max_fruits)
+}
+
+
+// object approach
+// function totalFruit(fruits) {
+//   let window_start = 0;
+//   let max_fruits = 0;
+//   let fruit_basket = {};
+//   for (let window_end = 0; window_end < fruits.length; window_end++) {
+//     if (fruit_basket[fruits[window_end]]) {
+//       fruit_basket[fruits[window_end]] += 1;
+//     } else {
+//       fruit_basket[fruits[window_end]] = 1;
+//     }
+//     console.log(window_start, window_end, fruit_basket);
+//     while (Object.keys(fruit_basket).length > 2) {
+//       if (fruit_basket[fruits[window_start]] > 1) {
+//         fruit_basket[fruits[window_start]] -= 1;
+//       } else {
+//         delete fruit_basket[fruits[window_start]];
+//       }
+//       window_start++;
+//       console.log(window_start, window_end, fruit_basket);
+//     }
+//     max_fruits = Math.max(max_fruits, window_end - window_start + 1);
+//   }
+//   console.log("max_fruits", max_fruits);
+// }
+
 // Longest Substring with K Distinct Characters (medium)
 
-longestSubstringWithKdistinct("araaci", 2); //4, The longest substring with no more than '2' distinct characters is "araa".
-// longestSubstringWithKdistinct("araaci", 1)//2, The longest substring with no more than '1' distinct characters is "aa".
-// longestSubstringWithKdistinct("cbbebi", 3)//5, The longest substrings with no more than '3' distinct characters are "cbbeb" & "bbebi".
+// longestSubstringWithKdistinct("araaci", 2); //4, The longest substring with no more than '2' distinct characters is "araa".
+// // longestSubstringWithKdistinct("araaci", 1)//2, The longest substring with no more than '1' distinct characters is "aa".
+// // longestSubstringWithKdistinct("cbbebi", 3)//5, The longest substrings with no more than '3' distinct characters are "cbbeb" & "bbebi".
 
-function longestSubstringWithKdistinct(str, k) {
-  let window_start = 0;
-  let max_length = 0;
-  let char_counter = {};
-  // console.log(Object.keys(char_counter).length)
-  for (window_end = 0; window_end < str.length; window_end++) {
-    if (char_counter[str[window_end]]) {
-      char_counter[str[window_end]] += 1;
-    } else {
-      char_counter[str[window_end]] = 1;
-    }
-    console.log(window_start, window_end, char_counter);
-    while (Object.keys(char_counter).length > k) {
-      if (char_counter[str[window_start]] > 1) {
-        char_counter[str[window_start]] -= 1;
-      } else {
-        delete char_counter[str[window_start]];
-      }
-      window_start++
-    }
-    max_length = Math.max(max_length, window_end - window_start + 1);
-  }
-  console.log("max_length", max_length)
-}
+// function longestSubstringWithKdistinct(str, k) {
+//   let window_start = 0;
+//   let max_length = 0;
+//   let char_counter = {};
+//   // console.log(Object.keys(char_counter).length)
+//   for (window_end = 0; window_end < str.length; window_end++) {
+//     if (char_counter[str[window_end]]) {
+//       char_counter[str[window_end]] += 1;
+//     } else {
+//       char_counter[str[window_end]] = 1;
+//     }
+//     console.log(window_start, window_end, char_counter);
+//     while (Object.keys(char_counter).length > k) {
+//       if (char_counter[str[window_start]] > 1) {
+//         char_counter[str[window_start]] -= 1;
+//       } else {
+//         delete char_counter[str[window_start]];
+//       }
+//       window_start++
+//     }
+//     max_length = Math.max(max_length, window_end - window_start + 1);
+//   }
+//   console.log("max_length", max_length)
+// }
 
 // Smallest Subarray with a given sum (easy)
 
