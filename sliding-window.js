@@ -1,28 +1,47 @@
-// Fruit Into Baskets
-totalFruit([3,3,3,1,2,1,1,2,3,3,4]);
+// Longest Substring with at most 2 distinct characters
 
+lengthOfLongestSubstring("abba");
 
-// map approach
-function totalFruit(fruits) {
-    let window_start = 0;
-    let max_fruits = 0;
-    let fruit_map = new Map();
-    for (let window_end = 0; window_end < fruits.length; window_end++){
-        let fruit_end = fruits[window_end];
-        fruit_map.set(fruit_end, fruit_map.get(fruit_end) +1 || 1 )
-        while (fruit_map.size >2 ){
-            let fruit_start = fruits[window_start];
-            fruit_map.set(fruit_start, fruit_map.get(fruit_start)-1 )
-            if(fruit_map.get(fruit_start) == 0){
-                fruit_map.delete(fruit_start)
-            }
-            window_start++
-        }
-        max_fruits = Math.max(max_fruits, window_end-window_start+1)
+function lengthOfLongestSubstring(s) {
+  let window_start = 0;
+  let window_max = 0;
+  let char_map = {};
+  for (let window_end = 0; window_end < s.length; window_end++) {
+    let cur_char = s[window_end];
+    if (cur_char in char_map) {
+      console.log("found", cur_char, window_end);
+      window_start = Math.max(window_start, char_map[cur_char]+1);
+
     }
-    console.log(max_fruits)
+    window_max = Math.max(window_max, window_end - window_start + 1);
+    char_map[cur_char] = window_end;
+    console.log(char_map, window_max, window_start, window_end);
+  }
 }
 
+// Fruit Into Baskets
+// totalFruit([3,3,3,1,2,1,1,2,3,3,4]);
+
+// // map approach
+// function totalFruit(fruits) {
+//     let window_start = 0;
+//     let max_fruits = 0;
+//     let fruit_map = new Map();
+//     for (let window_end = 0; window_end < fruits.length; window_end++){
+//         let fruit_end = fruits[window_end];
+//         fruit_map.set(fruit_end, fruit_map.get(fruit_end) +1 || 1 )
+//         while (fruit_map.size >2 ){
+//             let fruit_start = fruits[window_start];
+//             fruit_map.set(fruit_start, fruit_map.get(fruit_start)-1 )
+//             if(fruit_map.get(fruit_start) == 0){
+//                 fruit_map.delete(fruit_start)
+//             }
+//             window_start++
+//         }
+//         max_fruits = Math.max(max_fruits, window_end-window_start+1)
+//     }
+//     console.log(max_fruits)
+// }
 
 // object approach
 // function totalFruit(fruits) {
