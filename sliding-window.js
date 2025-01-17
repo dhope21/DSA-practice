@@ -1,28 +1,54 @@
-// Longest Substring with Same Letters after Replacement (hard)
 
-characterReplacement("ABAB", 2)
+// Longest Subarray with Ones after Replacement (hard)
 
-function characterReplacement(s, k) {
+longestOnes([1,1,1,0,0,0,1,1,1,1,0], 2);
+
+function longestOnes(nums, k) {
     let window_start = 0;
     let max_length = 0;
-    let char_counter = {}
-    let max_count = 0;
-    for (let window_end = 0; window_end < s.length; window_end++){
-        const char_end = s[window_end];
-        if(!(char_end in char_counter)){
-            char_counter[char_end] = 0
-        }
-        char_counter[char_end]++
-        max_count = Math.max(max_count, char_counter[char_end])
-        if (window_end-window_start+1 > k + max_count){
-            const char_start = s[window_start]
-            char_counter[char_start]--
+    let int_count = {0:0, 1:0};
+    let max_one = 0;
+    for (let window_end= 0; window_end < nums.length; window_end++){
+        const end_int = nums[window_end];
+        int_count[end_int]++
+        max_one = Math.max(max_one, int_count[1]);
+        if (window_end-window_start+1 > max_one + k){
+            const start_int = nums[window_start];
+            int_count[start_int]--
             window_start++
         }
         max_length = Math.max(max_length, window_end-window_start+1)
     }
     console.log(max_length)
+
 };
+
+
+// Longest Substring with Same Letters after Replacement (hard)
+
+// characterReplacement("ABAB", 2)
+
+// function characterReplacement(s, k) {
+//     let window_start = 0;
+//     let max_length = 0;
+//     let char_counter = {}
+//     let max_count = 0;
+//     for (let window_end = 0; window_end < s.length; window_end++){
+//         const char_end = s[window_end];
+//         if(!(char_end in char_counter)){
+//             char_counter[char_end] = 0
+//         }
+//         char_counter[char_end]++
+//         max_count = Math.max(max_count, char_counter[char_end])
+//         if (window_end-window_start+1 > k + max_count){
+//             const char_start = s[window_start]
+//             char_counter[char_start]--
+//             window_start++
+//         }
+//         max_length = Math.max(max_length, window_end-window_start+1)
+//     }
+//     console.log(max_length)
+// };
 
 
 // No-repeat Substring (hard)
