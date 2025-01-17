@@ -1,23 +1,49 @@
-// Longest Substring with at most 2 distinct characters
+// Longest Substring with Same Letters after Replacement (hard)
 
-lengthOfLongestSubstring("abba");
+characterReplacement("ABAB", 2)
 
-function lengthOfLongestSubstring(s) {
-  let window_start = 0;
-  let window_max = 0;
-  let char_map = {};
-  for (let window_end = 0; window_end < s.length; window_end++) {
-    let cur_char = s[window_end];
-    if (cur_char in char_map) {
-      console.log("found", cur_char, window_end);
-      window_start = Math.max(window_start, char_map[cur_char]+1);
-
+function characterReplacement(s, k) {
+    let window_start = 0;
+    let max_length = 0;
+    let char_counter = {}
+    let max_count = 0;
+    for (let window_end = 0; window_end < s.length; window_end++){
+        const char_end = s[window_end];
+        if(!(char_end in char_counter)){
+            char_counter[char_end] = 0
+        }
+        char_counter[char_end]++
+        max_count = Math.max(max_count, char_counter[char_end])
+        if (window_end-window_start+1 > k + max_count){
+            const char_start = s[window_start]
+            char_counter[char_start]--
+            window_start++
+        }
+        max_length = Math.max(max_length, window_end-window_start+1)
     }
-    window_max = Math.max(window_max, window_end - window_start + 1);
-    char_map[cur_char] = window_end;
-    console.log(char_map, window_max, window_start, window_end);
-  }
-}
+    console.log(max_length)
+};
+
+
+// No-repeat Substring (hard)
+
+// lengthOfLongestSubstring("abba");
+
+// function lengthOfLongestSubstring(s) {
+//   let window_start = 0;
+//   let window_max = 0;
+//   let char_map = {};
+//   for (let window_end = 0; window_end < s.length; window_end++) {
+//     let cur_char = s[window_end];
+//     if (cur_char in char_map) {
+//       window_start = Math.max(window_start, char_map[cur_char]+1);
+
+//     }
+//     window_max = Math.max(window_max, window_end - window_start + 1);
+//     char_map[cur_char] = window_end;
+//     console.log(char_map, window_max, window_start, window_end);
+//   }
+// }
 
 // Fruit Into Baskets
 // totalFruit([3,3,3,1,2,1,1,2,3,3,4]);
