@@ -1,28 +1,93 @@
+// Permutation in a String (hard)
+
+checkInclusion("ab", "eidbaooo");
+
+function checkInclusion (s1, s2) {
+  if (s1.length > s2.length) {
+    console.log( false);
+  }
+  let s1Count = {};
+  let s2Count = {};
+  for (let i = 0; i < s1.length; i++) {
+    s1Count[s1[i]] = (s1Count[s1[i]] || 0) + 1;
+    s2Count[s2[i]] = (s2Count[s2[i]] || 0) + 1;
+  }
+  if (isEqual(s1Count, s2Count)) {
+    console.log( true);
+  }
+  let left = 0;
+  for (let right = s1.length; right < s2.length; right++) {
+    s2Count[s2[right]] = (s2Count[s2[right]] || 0) + 1;
+    s2Count[s2[left]]--;
+    if (s2Count[s2[left]] === 0) {
+      delete s2Count[s2[left]];
+    }
+    left++;
+    if (isEqual(s1Count, s2Count)) {
+      console.log( true);
+    }
+  }
+  console.log( false);
+};
+
+function isEqual(obj1, obj2) {
+  if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+    return false;
+  }
+  for (let key in obj1) {
+    if (obj1[key] !== obj2[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// function checkInclusion(s1, s2) {
+//   let window_end = 0;
+//   let remaining_s1 = s1;
+//   for (let window_start = 0; window_start < s2.length; window_start++) {
+//     let char_start = s2[window_start];
+//     console.log("out", window_start, window_end, char_start, remaining_s1)
+//     while (remaining_s1.indexOf(char_start) > -1){
+//         window_end++;
+//         console.log(window_start, window_end, char_start, remaining_s1);
+//         remaining_s1 = remaining_s1.replace(char_start,"");
+//         console.log(remaining_s1);
+//         char_start = s2[window_end];
+//         if(remaining_s1.length == 0){
+//             console.log(true)
+//         }
+//     }
+//     if(remaining_s1.indexOf(char_start) == -1){
+//         remaining_s1 = s1;
+//         window_end = window_start+1;
+//     }
+//   };
+//   console.log(false)
+// }
 
 // Longest Subarray with Ones after Replacement (hard)
 
-longestOnes([1,1,1,0,0,0,1,1,1,1,0], 2);
+// longestOnes([1,1,1,0,0,0,1,1,1,1,0], 2);
 
-function longestOnes(nums, k) {
-    let window_start = 0;
-    let max_length = 0;
-    let int_count = {0:0, 1:0};
-    let max_one = 0;
-    for (let window_end= 0; window_end < nums.length; window_end++){
-        const end_int = nums[window_end];
-        int_count[end_int]++
-        max_one = Math.max(max_one, int_count[1]);
-        if (window_end-window_start+1 > max_one + k){
-            const start_int = nums[window_start];
-            int_count[start_int]--
-            window_start++
-        }
-        max_length = Math.max(max_length, window_end-window_start+1)
-    }
-    console.log(max_length)
-
-};
-
+// function longestOnes(nums, k) {
+//     let window_start = 0;
+//     let max_length = 0;
+//     let int_count = {0:0, 1:0};
+//     let max_one = 0;
+//     for (let window_end= 0; window_end < nums.length; window_end++){
+//         const end_int = nums[window_end];
+//         int_count[end_int]++
+//         max_one = Math.max(max_one, int_count[1]);
+//         if (window_end-window_start+1 > max_one + k){
+//             const start_int = nums[window_start];
+//             int_count[start_int]--
+//             window_start++
+//         }
+//         max_length = Math.max(max_length, window_end-window_start+1)
+//     }
+//     console.log(max_length)
+// };
 
 // Longest Substring with Same Letters after Replacement (hard)
 
@@ -49,7 +114,6 @@ function longestOnes(nums, k) {
 //     }
 //     console.log(max_length)
 // };
-
 
 // No-repeat Substring (hard)
 
